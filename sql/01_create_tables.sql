@@ -1,0 +1,26 @@
+CREATE TABLE FacultyAdvisor(
+    Advisor_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    Name VARCHAR2(100) NOT NULL,
+    Email VARCHAR2(100) NOT NULL,
+    Department VARCHAR2(100) NOT NULL,
+    Phone VARCHAR2(20) NOT NULL,
+
+    PRIMARY KEY (Advisor_ID),
+    UNIQUE (Email)
+);
+
+CREATE TABLE Club(
+    Club_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    Club_Name VARCHAR2(100) NOT NULL,
+    Category VARCHAR2(50) NOT NULL,
+    FoundedDate DATE NOT NULL,
+    Description VARCHAR2(500) NOT NULL,
+    Status VARCHAR2(20) NOT NULL,
+
+    Advisor_ID NUMBER NOT NULL,
+
+    PRIMARY KEY (Club_ID),
+    FOREIGN KEY (Advisor_ID) REFERENCES FACULTYADVISOR(Advisor_ID),
+
+    CONSTRAINT chk_club_status CHECK (Status IN ('Active', 'Inactive'))
+);
