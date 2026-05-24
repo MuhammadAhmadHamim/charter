@@ -72,3 +72,55 @@ CREATE TABLE Venue(
     PRIMARY KEY (Venue_ID),
     CONSTRAINT chk_venue_available CHECK (IsAvailable IN ('YES', 'NO'))
 );
+
+CREATE TABLE Event(
+    Event_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    Title VARCHAR2(150) NOT NULL,
+    EventDate DATE NOT NULL,
+    StartTime VARCHAR2(10) NOT NULL,
+    EndTime VARCHAR2(10) NOT NULL,
+    BudgetAllocated NUMBER(10,2) NOT NULL,
+    EventType VARCHAR2(20) NOT NULL,
+    Club_ID NUMBER NOT NULL,
+    Venue_ID NUMBER NOT NULL,
+
+    PRIMARY KEY (Event_ID),
+    FOREIGN KEY (Club_ID) REFERENCES Club(Club_ID),
+    FOREIGN KEY (Venue_ID) REFERENCES Venue(Venue_ID),
+    CONSTRAINT chk_event_type CHECK (EventType IN ('Workshop', 'Competition', 'Meetup'))
+);
+
+CREATE TABLE Workshop(
+    Event_ID NUMBER NOT NULL,
+    Topic VARCHAR2(200) NOT NULL,
+    TrainerName VARCHAR2(100) NOT NULL,
+    MaterialProvided VARCHAR2(5) NOT NULL,
+    DurationHours NUMBER NOT NULL,
+
+    PRIMARY KEY (Event_ID),
+    FOREIGN KEY (Event_ID) REFERENCES Event(Event_ID),
+    CONSTRAINT chk_material CHECK (MaterialProvided IN ('YES', 'NO'))
+);
+
+CREATE TABLE Competition(
+    Event_ID NUMBER NOT NULL,
+    PrizePool NUMBER(10,2) NOT NULL,
+    NumberOfRounds NUMBER NOT NULL,
+    JudgesCount NUMBER NOT NULL,
+    RegistrationFee NUMBER(10,2) NOT NULL,
+
+    PRIMARY KEY (Event_ID),
+    FOREIGN KEY (Event_ID) REFERENCES Event(Event_ID)
+);
+
+CREATE TABLE Meetup(
+    Event_ID NUMBER NOT NULL,
+    AgendaType VARCHAR2(100) NOT NULL,
+    DrinksProvided VARCHAR2(5) NOT NULL,
+    IsInformal VARCHAR2(5) NOT NULL,
+
+    PRIMARY KEY (Event_ID),
+    FOREIGN KEY (Event_ID) REFERENCES Event(Event_ID),
+    CONSTRAINT chk_drinks CHECK (DrinksProvided IN ('YES', 'NO')),
+    CONSTRAINT chk_informal CHECK (IsInformal IN ('YES', 'NO'))
+);
