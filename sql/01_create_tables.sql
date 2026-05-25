@@ -124,3 +124,28 @@ CREATE TABLE Meetup(
     CONSTRAINT chk_drinks CHECK (DrinksProvided IN ('YES', 'NO')),
     CONSTRAINT chk_informal CHECK (IsInformal IN ('YES', 'NO'))
 );
+
+CREATE TABLE Registration(
+    Reg_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    RegDate DATE NOT NULL,
+    Status VARCHAR2(20) NOT NULL,
+    Event_ID NUMBER NOT NULL,
+    Member_ID NUMBER NOT NULL,
+
+    PRIMARY KEY (Reg_ID),
+    FOREIGN KEY (Event_ID) REFERENCES Event(Event_ID),
+    FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID),
+    CONSTRAINT chk_reg_status CHECK (Status IN ('Confirmed', 'Cancelled', 'Waitlisted'))
+);
+
+CREATE TABLE Attendance(
+    Attendance_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    CheckInTime VARCHAR2(10) NOT NULL,
+    CheckOutTime VARCHAR2(10),
+    Attended VARCHAR2(5) NOT NULL,
+    Reg_ID NUMBER NOT NULL,
+
+    PRIMARY KEY (Attendance_ID),
+    FOREIGN KEY (Reg_ID) REFERENCES Registration(Reg_ID),
+    CONSTRAINT chk_attended CHECK (Attended IN ('YES', 'NO'))
+);
