@@ -73,6 +73,18 @@ CREATE TABLE Venue(
     CONSTRAINT chk_venue_available CHECK (IsAvailable IN ('YES', 'NO'))
 );
 
+CREATE TABLE Sponsor(
+    Sponsor_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    SponsorName VARCHAR2(100) NOT NULL,
+    ContactPerson VARCHAR2(100) NOT NULL,
+    Email VARCHAR2(100) NOT NULL,
+    Phone VARCHAR2(20) NOT NULL,
+    SponsorAmount NUMBER(10,2) NOT NULL,
+
+    PRIMARY KEY (Sponsor_ID),
+    UNIQUE (Email)
+);
+
 CREATE TABLE Event(
     Event_ID NUMBER GENERATED ALWAYS AS IDENTITY,
     Title VARCHAR2(150) NOT NULL,
@@ -83,10 +95,12 @@ CREATE TABLE Event(
     EventType VARCHAR2(20) NOT NULL,
     Club_ID NUMBER NOT NULL,
     Venue_ID NUMBER NOT NULL,
+    Sponsor_ID NUMBER,
 
     PRIMARY KEY (Event_ID),
     FOREIGN KEY (Club_ID) REFERENCES Club(Club_ID),
     FOREIGN KEY (Venue_ID) REFERENCES Venue(Venue_ID),
+    FOREIGN KEY (Sponsor_ID) REFERENCES Sponsor(Sponsor_ID),
     CONSTRAINT chk_event_type CHECK (EventType IN ('Workshop', 'Competition', 'Meetup'))
 );
 
@@ -148,4 +162,28 @@ CREATE TABLE Attendance(
     PRIMARY KEY (Attendance_ID),
     FOREIGN KEY (Reg_ID) REFERENCES Registration(Reg_ID),
     CONSTRAINT chk_attended CHECK (Attended IN ('YES', 'NO'))
+);
+
+CREATE TABLE Budget(
+    Budget_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    Semester VARCHAR2(20) NOT NULL,
+    TotalAmount NUMBER(10,2) NOT NULL,
+    AmountSpent NUMBER(10,2) NOT NULL,
+    Remaining NUMBER(10,2) GENERATED ALWAYS AS (TotalAmount - AmountSpent) VIRTUAL,
+    Club_ID NUMBER NOT NULL,
+
+    PRIMARY KEY (Budget_ID),
+    FOREIGN KEY (Club_ID) REFERENCES Club(Club_ID)
+);
+
+CREATE TABLE Feedback(
+    Feedback_ID NUMBER GENERATED ALWAYS AS IDENTITY,
+    Rating NUMBER(1) NOT NULL,
+    Comments VARCHAR2(500),
+    FeedbackDate DATE NOT NULL,
+    Attendance_ID NUMBER NOT NULL,
+
+    PRIMARY KEY (Feedback_ID),
+    FOREIGN KEY (Attendance_ID) REFERENCES Attendance(Attendance_ID),
+    CONSTRAINT chk_rating CHECK (Rating BETWEEN 1 AND 5)
 );
