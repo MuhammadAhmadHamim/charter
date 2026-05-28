@@ -1,0 +1,12 @@
+-- Charter Analytics
+-- Query 6: Monthly Event Count
+-- Returns number of events organized per month
+
+SELECT 
+    TO_CHAR(EVENTDATE, 'Mon YYYY') AS MONTH,
+    COUNT(EVENT_ID) AS TOTAL_EVENTS,
+    SUM(BUDGETALLOCATED) AS TOTAL_BUDGET_ALLOCATED
+FROM EVENT
+GROUP BY TO_CHAR(EVENTDATE, 'Mon YYYY'),
+         TO_CHAR(EVENTDATE, 'YYYY-MM')
+ORDER BY TO_CHAR(EVENTDATE, 'YYYY-MM');
