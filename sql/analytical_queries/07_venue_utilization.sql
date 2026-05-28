@@ -1,0 +1,15 @@
+-- Charter Analytics
+-- Query 7: Venue Utilization
+-- Returns venues ranked by number of events hosted
+
+SELECT 
+    V.VENUENAME AS VENUE,
+    V.LOCATION,
+    V.CAPACITY,
+    COUNT(E.EVENT_ID) AS EVENTS_HOSTED,
+    ROUND((COUNT(E.EVENT_ID) / 
+    (SELECT COUNT(*) FROM EVENT)) * 100, 2) AS USAGE_PERCENT
+FROM VENUE V
+JOIN EVENT E ON V.VENUE_ID = E.VENUE_ID
+GROUP BY V.VENUENAME, V.LOCATION, V.CAPACITY
+ORDER BY COUNT(E.EVENT_ID) DESC;
