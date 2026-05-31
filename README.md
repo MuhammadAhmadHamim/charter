@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:050810,40:0a0e1a,100:050810&height=240&section=header&text=Charter&fontSize=72&fontColor=c9a84c&fontAlignY=38&desc=Campus%20Club%20%26%20Event%20Management%20Suite&descAlignY=60&descColor=e8d5a3&animation=fadeIn&fontFamily=Georgia" alt="Charter banner"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:050810,40:0a0e1a,100:050810&height=240&section=header&text=Charter&fontSize=72&fontColor=c9a84c&fontAlignY=38&desc=Campus%20Club%20and%20Event%20Management%20Suite&descAlignY=60&descColor=e8d5a3&animation=fadeIn&fontFamily=Georgia" alt="Charter banner"/>
 
 <br/>
 
