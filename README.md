@@ -262,20 +262,25 @@ charter/
 ### Prerequisites
 Oracle Database · Oracle APEX Workspace
 
+```bash
+# Step 1 - Clone
+git clone https://github.com/MuhammadAhmadHamim/charter.git
+```
+
 ```sql
--- Step 1 — Create the schema
+-- Step 2 — Create the schema
 -- SQL Workshop → SQL Scripts → Run
 01_create_tables.sql
 
--- Step 2 — Load sample data
+-- Step 3 — Load sample data
 02_insert_data.sql
 
--- Step 3 — Configure authentication
+-- Step 4 — Configure authentication
 03_auth_setup.sql
 ```
 
 ```
--- Step 4 — Import the APEX application
+-- Step 5 — Import the APEX application
 App Builder → Import → charter_app.sql
 ```
 
