@@ -49,8 +49,8 @@ Four roles. Four different views of the same system. Custom authentication backe
 | Role | Access Level |
 |:---:|:---|
 | **Admin** | Full access — all pages, all CRUD |
-| **President** | Events, Registrations, Attendance, Memberships |
-| **Member** | Registration and Feedback only |
+| **President** | Events, Workshops, Competitions, Meetups, Attendance, Memberships — view Registrations, edit existing ones
+| **Member** | Registration and Feedback only - view Registrations & Feedback, create new ones |
 | **Advisor** | Analytics and Budget — read only |
 
 </details>
@@ -77,7 +77,8 @@ Subclass-filtered dropdowns ensure Workshop pages only show Workshop-type events
 <summary><b>✅ Registration and Attendance Pipeline</b></summary>
 <br/>
 
-Members register for events. Attendance is tracked per registration. Only members with `Attended = YES` are eligible to submit feedback — enforced at the database level, not just the UI.
+Members register for events with status defaulting to Waitlisted. Presidents and Admins confirm or cancel registrations.
+Attendance is tracked per confirmed registration. Only members with Attended = YES are eligible to submit feedback — enforced at the database level, not just the UI. Button level authorization separates who can create vs edit at every stage of the pipeline.
 
 </details>
 
@@ -161,6 +162,12 @@ BudgetRemaining AS (TotalAmount - AmountSpent)
 
 -- Venue filter — only available venues in Event form dropdown
 WHERE Venue.IsAvailable = 'YES'
+
+-- Button level authorization — granular control per operation
+-- Member can create registrations but not edit existing ones
+-- President can edit registrations but not create new ones
+-- Advisor can view budget but cannot create or modify records
+-- Only Admin can delete any record system wide
 ```
 
 ---
@@ -312,6 +319,8 @@ App Builder → Import → charter_app.sql
 ![](https://img.shields.io/badge/RBAC-4%20Role%20Auth%20System-e8d5a3?style=flat-square&logo=shield&logoColor=black)
 ![](https://img.shields.io/badge/Oracle%20APEX-Custom%20Authentication-0a0e1a?style=flat-square&logo=oracle&logoColor=c9a84c)
 ![](https://img.shields.io/badge/SQL-Virtual%20Columns%20%26%20CHECK%20Constraints-c9a84c?style=flat-square&logo=sqlite&logoColor=black)
+![](https://img.shields.io/badge/Oracle%20APEX-Button%20Level%20Authorization-c9a84c?style=flat-square&logo=oracle&logoColor=black)
+![](https://img.shields.io/badge/DB%20Design-Subclass%20Filtered%20Dropdowns-0a0e1a?style=flat-square&logo=buffer&logoColor=c9a84c)
 
 </div>
 
