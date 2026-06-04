@@ -114,6 +114,11 @@ Venues tracked with availability control. Only available venues appear in the Ev
 
 </details>
 
+- **Context Aware Read Only Fields** — record identity fields 
+  locked after creation, operational fields remain editable
+- **Transparent Subclass Relations** — Event IDs displayed 
+  directly in subclass forms, filtered by EventType
+
 ---
 
 ## ◈ Database Architecture
@@ -168,6 +173,17 @@ WHERE Venue.IsAvailable = 'YES'
 -- President can edit registrations but not create new ones
 -- Advisor can view budget but cannot create or modify records
 -- Only Admin can delete any record system wide
+
+-- Read Only fields on edit — context aware
+-- Fields that define record identity are locked after creation
+-- Member, Club locked in Membership — role change via update
+-- EventType, Club locked in Event — venue and sponsor flexible
+-- Registration reference locked in Attendance and Feedback
+-- Club, Semester locked in Budget — amounts remain editable
+
+-- Subclass transparency — numeric Event IDs in subclass forms
+-- Makes PK-FK relationship explicit at UI level
+-- Filtered by EventType — Workshop IDs only in Workshop form
 ```
 
 ---
