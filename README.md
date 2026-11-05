@@ -281,6 +281,7 @@ Oracle Database · Oracle APEX Workspace
 ```bash
 # Step 1 - Clone
 git clone https://github.com/MuhammadAhmadHamim/charter.git
+cd charter
 ```
 
 ```sql
